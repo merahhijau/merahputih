@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Materi PAI Kelas 10 Semester Akhir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices: 
+        - Pendahuluan: Teks informatif. Tujuan: Memberikan konteks. Metode: Paragraf HTML.
+        - Al-Qur'an (QS Ali Imran: 159 & QS Asy Syura: 38): Kartu interaktif untuk setiap Surah (Ayat, Terjemahan, Kandungan, Penerapan). Tujuan: Memahami ayat dan aplikasinya. Metode: HTML/JS (accordion/kartu). Interaksi: Klik untuk detail. Justifikasi: Mengorganisir info detail secara ringkas.
+        - Aqidah (Iman kpd Malaikat & Syu'ab al-Iman): Tabel nama malaikat & tugasnya. Diagram batang untuk kategori Syu'ab al-Iman (jumlah cabang). Tujuan: Memahami konsep & struktur. Metode: HTML tabel, Chart.js (Bar Chart). Interaksi: Tooltip pada chart, klik bar untuk detail contoh. Justifikasi: Visualisasi perbandingan jumlah & presentasi data terstruktur.
+        - Akhlak (Terpuji & Tercela): Tab/accordion untuk Adab & Perilaku Tercela. Tujuan: Memahami & membedakan. Metode: HTML/JS (tab/accordion). Interaksi: Klik untuk ganti/buka. Justifikasi: Mengelompokkan sub-topik terkait.
+        - Fiqih (Zakat, Haji, Wakaf & Al-Kulliyatu al-Khamsah): Tabel jenis zakat. Kartu/diagram sederhana untuk Al-Kulliyatu al-Khamsah. Tujuan: Memahami hukum & prinsip. Metode: HTML tabel, HTML/CSS (kartu/div). Interaksi: Klik untuk detail. Justifikasi: Penyajian terstruktur.
+        - Tarikh (Rasulullah di Madinah & Penyebaran Islam di Indonesia): Daftar/kartu untuk strategi dakwah & sifat Nabi. Tabel/kartu untuk tokoh penyebar Islam. Tujuan: Memahami sejarah & keteladanan. Metode: HTML (daftar/kartu/tabel). Interaksi: Hover/klik untuk info. Justifikasi: Penyajian naratif & data tokoh.
+        - Tantangan & Rekomendasi: Teks & daftar. Tujuan: Refleksi & solusi. Metode: Paragraf & daftar HTML.
+        Semua bertujuan menyajikan informasi dari laporan secara interaktif dan mudah dipahami, mendukung struktur navigasi utama. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .nav-button { transition: all 0.3s ease; }
+        .nav-button.active { background-color: #34D399; color: white; }
+        .nav-button:hover { background-color: #A7F3D0; }
+        .card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); padding: 1.5rem; margin-bottom: 1rem; }
+        .card h3 { color: #10B981; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button.active { border-bottom-color: #34D399; color: #34D399; font-weight: 600;}
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <header class="bg-emerald-600 text-white p-6 shadow-md">
+        <h1 class="text-3xl font-bold text-center">Jelajah Materi PAI Kelas 10 Semester Akhir</h1>
+    </header>
+
+    <nav class="bg-stone-100 p-4 shadow-sm sticky top-0 z-50">
+        <ul class="flex flex-wrap justify-center gap-2 md:gap-4">
+            <li><button data-target="pendahuluan" class="nav-button active py-2 px-4 rounded-md font-semibold bg-emerald-500 text-white">Pendahuluan</button></li>
+            <li><button data-target="alquran" class="nav-button py-2 px-4 rounded-md font-semibold">Al-Qur'an</button></li>
+            <li><button data-target="aqidah" class="nav-button py-2 px-4 rounded-md font-semibold">Aqidah</button></li>
+            <li><button data-target="akhlak" class="nav-button py-2 px-4 rounded-md font-semibold">Akhlak</button></li>
+            <li><button data-target="fiqih" class="nav-button py-2 px-4 rounded-md font-semibold">Fiqih</button></li>
+            <li><button data-target="tarikh" class="nav-button py-2 px-4 rounded-md font-semibold">Tarikh</button></li>
+            <li><button data-target="tantangan" class="nav-button py-2 px-4 rounded-md font-semibold">Tantangan & Rekomendasi</button></li>
+        </ul>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="pendahuluan" class="content-section active">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">I. Pendahuluan</h2>
+                <p class="mb-3">Selamat datang di aplikasi interaktif untuk menjelajahi materi Pendidikan Agama Islam (PAI) kelas 10 semester akhir. Bagian pendahuluan ini memberikan latar belakang mengenai pentingnya PAI dalam kurikulum pendidikan di Indonesia, tujuan dari analisis materi yang disajikan, serta bagaimana Kurikulum Merdeka membingkai pembelajaran PAI. Tujuannya adalah untuk memberikan pemahaman awal sebelum Anda mendalami aspek-aspek spesifik PAI.</p>
+                
+                <h3 class="text-xl font-semibold mb-2">Latar Belakang dan Konteks Pendidikan Agama Islam</h3>
+                <p class="mb-3">Pendidikan Agama Islam (PAI) di Indonesia memegang peranan krusial dalam membentuk karakter, moral, dan spiritual peserta didik, sejalan dengan tujuan pendidikan nasional. Materi PAI tidak hanya berfokus pada aspek kognitif, melainkan juga mencakup dimensi afektif dan psikomotorik, menuntut pemahaman yang mendalam serta implementasi nilai-nilai keislaman dalam kehidupan sehari-hari. Kurikulum PAI disusun dengan tujuan memberikan pemahaman yang komprehensif tentang ajaran Islam serta membantu peserta didik mengembangkan sikap dan perilaku yang sesuai dengan nilai-nilai Islam.</p>
+                <p class="mb-3">Penekanan pada "pemahaman mendalam" dan "pengembangan sikap dan perilaku" dalam kurikulum PAI menunjukkan adanya pergeseran dari pembelajaran hafalan semata menuju pendekatan yang lebih holistik dan berorientasi pada pembentukan karakter.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Tujuan dan Ruang Lingkup Laporan Analisis</h3>
+                <p class="mb-3">Analisis ini bertujuan untuk melakukan telaah mendalam terhadap materi PAI untuk kelas 10 semester akhir (genap) sesuai dengan kurikulum umum yang tersedia, khususnya Kurikulum Merdeka. Analisis mencakup lima aspek utama PAI: Al-Qur'an, Aqidah, Akhlak, Fiqih, dan Tarikh. Fokusnya adalah pada konsep inti, dalil, aplikasi praktis, dan implikasi pedagogis.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Kerangka Kurikulum Merdeka untuk PAI SMA/SMK</h3>
+                <p class="mb-3">Kurikulum Merdeka menetapkan Capaian Pembelajaran (CP) sebagai acuan utama. Untuk PAI, CP disusun per fase (kelas 10 adalah Fase E) dan berlandaskan Standar Nasional Pendidikan. Fokus pada "kompetensi" memberi keleluasaan guru merancang pembelajaran yang relevan dan berpusat pada siswa, sejalan dengan tuntutan "pembelajaran mendalam".</p>
+            </div>
+        </section>
+
+        <section id="alquran" class="content-section">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">II. A. Aspek Al-Qur'an: Demokrasi & Musyawarah</h2>
+                <p class="mb-4">Bagian ini membahas pemahaman ayat-ayat Al-Qur'an yang berkaitan dengan konsep demokrasi dan musyawarah dalam Islam, khususnya QS Ali Imran: 159 dan QS Asy Syura: 38. Anda akan diajak untuk memahami kandungan ayat, konsep musyawarah, serta bagaimana nilai-nilai ini dapat diterapkan dalam kehidupan sehari-hari sebagai wujud perilaku demokratis yang dianjurkan Islam.</p>
+
+                <div class="mb-6">
+                    <button class="accordion-toggle w-full text-left bg-emerald-100 hover:bg-emerald-200 p-3 rounded-md font-semibold text-emerald-800 focus:outline-none">QS Ali Imran: 159</button>
+                    <div class="accordion-content p-3 border border-emerald-200 rounded-b-md">
+                        <h4 class="font-semibold">Kandungan Ayat:</h4>
+                        <p>Menekankan pentingnya sikap lemah lembut, pemaaf, dan musyawarah. Diturunkan pasca Perang Uhud, memerintahkan Nabi Muhammad SAW dan pengikutnya bermusyawarah. Setelah keputusan, diperintahkan bertawakal kepada Allah.</p>
+                        <h4 class="font-semibold mt-2">Konsep Musyawarah:</h4>
+                        <p>Nilai kelembutan berbicara, pemaafan, dan tawakal setelah musyawarah.</p>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <button class="accordion-toggle w-full text-left bg-emerald-100 hover:bg-emerald-200 p-3 rounded-md font-semibold text-emerald-800 focus:outline-none">QS Asy-Syura: 38</button>
+                    <div class="accordion-content p-3 border border-emerald-200 rounded-b-md">
+                        <h4 class="font-semibold">Kandungan Ayat:</h4>
+                        <p>Menjelaskan ciri-ciri orang beriman: merespons seruan Tuhan, mendirikan shalat, menyelesaikan urusan melalui musyawarah, dan menginfakkan sebagian rezeki.</p>
+                        <h4 class="font-semibold mt-2">Konsep Musyawarah:</h4>
+                        <p>Musyawarah sebagai karakteristik penting komunitas beriman.</p>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-semibold mb-2 mt-4">Penerapan Perilaku Demokratis dalam Kehidupan Sehari-hari</h3>
+                <p>Implementasi nilai demokrasi melibatkan pendidik sebagai teladan (dialog, keterbukaan, menghargai perbedaan). Siswa didorong aktif berpartisipasi dalam pembelajaran dan pengambilan keputusan, menjadi agen perubahan aktif. Integrasi nilai musyawarah, kelembutan, pemaafan, dan tawakal menumbuhkan tanggung jawab sipil dan harmoni interpersonal.</p>
+            </div>
+        </section>
+
+        <section id="aqidah" class="content-section">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">II. B. Aspek Aqidah: Iman kepada Malaikat & Syu'ab al-Iman</h2>
+                <p class="mb-4">Pada bagian Aqidah, fokus utama adalah peningkatan keimanan kepada malaikat sebagai rukun iman kedua. Ini mencakup pengertian iman kepada malaikat, mengenal nama-nama malaikat beserta tugasnya, serta tanda-tanda dan contoh perilaku beriman. Selain itu, akan dibahas konsep *Syu'ab al-Iman* (cabang-cabang iman) yang menunjukkan keluasan cakupan iman dalam Islam.</p>
+
+                <h3 class="text-xl font-semibold mb-2">Pengertian Iman kepada Malaikat</h3>
+                <p class="mb-3">Meyakini keberadaan malaikat sebagai makhluk gaib ciptaan Allah dari cahaya, yang senantiasa taat, tunduk, patuh, dan tidak pernah membangkang dalam menjalankan tugas. (QS Al Baqarah: 285).</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Nama-nama Malaikat dan Tugasnya</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
+                        <thead class="bg-emerald-50">
+                            <tr>
+                                <th class="py-2 px-4 border-b text-left text-sm font-semibold text-emerald-700">Nama Malaikat</th>
+                                <th class="py-2 px-4 border-b text-left text-sm font-semibold text-emerald-700">Tugas Utama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="py-2 px-4 border-b">Jibril</td><td class="py-2 px-4 border-b">Menyampaikan wahyu</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Mikail</td><td class="py-2 px-4 border-b">Membagikan rezeki</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Israfil</td><td class="py-2 px-4 border-b">Meniup sangkakala</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Izrail</td><td class="py-2 px-4 border-b">Mencabut nyawa</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Munkar</td><td class="py-2 px-4 border-b">Menanyakan orang yang mati dalam kubur</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Nakir</td><td class="py-2 px-4 border-b">Menanyai orang yang mati di dalam kubur</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Raqib</td><td class="py-2 px-4 border-b">Mencatat amal baik manusia</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Atid</td><td class="py-2 px-4 border-b">Mencatat amal buruk manusia</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Malik</td><td class="py-2 px-4 border-b">Menjaga pintu neraka</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Ridwan</td><td class="py-2 px-4 border-b">Menjaga pintu surga</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Tanda-tanda dan Contoh Perilaku Beriman kepada Malaikat</h3>
+                <p class="mb-3">Sikap mental: keyakinan hati akan keberadaan dan sifat malaikat. Perilaku lahiriah: deklarasi verbal dan amal shalih. Contoh: beramal shalih, bekerja keras, hati-hati dalam bertindak, peduli sosial, memperbaiki diri, berpikir positif, jujur, mempersiapkan diri menghadapi kematian, dll.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Integrasi Konsep Syu'ab al-Iman (Cabang-cabang Iman)</h3>
+                <p class="mb-3">Iman memiliki lebih dari 70 cabang. Tertinggi: syahadat "Laa ilaaha illallaah", terendah: menyingkirkan penghalang dari jalan. Malu adalah bagian dari iman. Dimensi: keyakinan hati (*ma'rifatun bil qalbi*), ungkapan lisan (*iqrarun bil lisan*), pengamalan tindakan (*'amalun bil arkan*).</p>
+                <div class="chart-container my-4">
+                    <canvas id="syuabImanChart"></canvas>
+                </div>
+                <div id="syuabImanDetail" class="mt-2 p-3 bg-emerald-50 rounded-md text-sm">Pilih batang pada diagram untuk melihat contoh cabang iman.</div>
+            </div>
+        </section>
+
+        <section id="akhlak" class="content-section">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">II. C. Aspek Akhlak: Perilaku Terpuji & Tercela</h2>
+                <p class="mb-4">Aspek Akhlak sangat penting dalam PAI, membentuk karakter Muslim yang baik. Bagian ini akan membahas dua sisi: membiasakan perilaku terpuji dalam kehidupan sehari-hari (adab) dan menghindari perilaku tercela yang merusak. Anda akan mempelajari adab berpakaian, berhias, perjalanan, bertamu, dan menerima tamu, serta bahaya dari hasad, riya, aniaya, dan diskriminasi, termasuk larangan pergaulan bebas dan zina.</p>
+
+                <div>
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                            <button class="tab-button active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="akhlak-terpuji">Perilaku Terpuji</button>
+                            <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="akhlak-tercela">Perilaku Tercela</button>
+                             <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="akhlak-zina">Larangan Zina</button>
+                        </nav>
+                    </div>
+
+                    <div id="akhlak-terpuji" class="tab-content active mt-4">
+                        <h3 class="text-xl font-semibold mb-3">Membiasakan Perilaku Terpuji</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-emerald-50 hover:bg-emerald-100 p-3 rounded-md font-medium text-emerald-700 focus:outline-none">Adab Berpakaian</button>
+                                <div class="accordion-content p-3 border border-emerald-100 rounded-b-md">Fungsi: penutup aurat, perhiasan, pelindung, identitas. Kriteria Muslimah: tidak transparan/ketat, tidak menyerupai laki-laki/non-Muslim, pantas, sederhana.</div>
+                            </div>
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-emerald-50 hover:bg-emerald-100 p-3 rounded-md font-medium text-emerald-700 focus:outline-none">Adab Berhias</button>
+                                <div class="accordion-content p-3 border border-emerald-100 rounded-b-md">Niat ibadah (syukur). Ketentuan: halal, tidak simbol non-Muslim, tidak berlebihan, tidak jahiliyah, sesuai gender, bukan pamer.</div>
+                            </div>
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-emerald-50 hover:bg-emerald-100 p-3 rounded-md font-medium text-emerald-700 focus:outline-none">Adab Perjalanan (Safar)</button>
+                                <div class="accordion-content p-3 border border-emerald-100 rounded-b-md">Tujuan baik (ibadah, silaturahmi, ilmu, dakwah, rezeki). Adab: istikharah, kembalikan hak, perlengkapan sunnah, mahram (wanita), teman shalih, pemimpin rombongan, pamit, doa.</div>
+                            </div>
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-emerald-50 hover:bg-emerald-100 p-3 rounded-md font-medium text-emerald-700 focus:outline-none">Adab Bertamu</button>
+                                <div class="accordion-content p-3 border border-emerald-100 rounded-b-md">Mempererat persaudaraan. Adab: izin & salam (maks 3x), waktu tepat, tidak lama, tidak ganggu, hormati jamuan, pamit.</div>
+                            </div>
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-emerald-50 hover:bg-emerald-100 p-3 rounded-md font-medium text-emerald-700 focus:outline-none">Adab Menerima Tamu</button>
+                                <div class="accordion-content p-3 border border-emerald-100 rounded-b-md">Wujud iman. Adab: sambut ceria & lembut, tempat nyaman, jamu sesuai kemampuan (maks 3 hari), pakaian sopan, antar ke pintu.</div>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold mt-6 mb-2">Kompetisi dalam Kebaikan dan Etos Kerja</h4>
+                        <p>Islam menekankan *fastabiqul khairat* (berlomba dalam kebaikan, QS. Al-Baqarah: 148) dan etos kerja tinggi (QS. At-Taubah: 105). Ini mendorong produktivitas, kontribusi positif, dan ketaatan.</p>
+                    </div>
+
+                    <div id="akhlak-tercela" class="tab-content mt-4">
+                        <h3 class="text-xl font-semibold mb-3">Menghindari Perilaku Tercela</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-red-50 hover:bg-red-100 p-3 rounded-md font-medium text-red-700 focus:outline-none">Hasad (Dengki)</button>
+                                <div class="accordion-content p-3 border border-red-100 rounded-b-md">Perasaan tidak senang orang lain dapat baik, berupaya nikmat hilang, senang orang lain musibah. Penyebab: kalah saing, kikir, cinta dunia, tidak iman qadha qadar. Bahaya: rusak iman, mental, persatuan, kebaikan diri.</div>
+                            </div>
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-red-50 hover:bg-red-100 p-3 rounded-md font-medium text-red-700 focus:outline-none">Riya'</button>
+                                <div class="accordion-content p-3 border border-red-100 rounded-b-md">Memperlihatkan amal untuk perhatian/pujian manusia. Tanda: malas saat sendiri, giat saat ramai, tambah amal saat dipuji, kurang saat dicela. Bahaya: sia-siakan amal, syirik khafi, halangi pahala akhirat, wariskan kehinaan.</div>
+                            </div>
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-red-50 hover:bg-red-100 p-3 rounded-md font-medium text-red-700 focus:outline-none">Aniaya (Zalim)</button>
+                                <div class="accordion-content p-3 border border-red-100 rounded-b-md">Tidak adil, tidak menempatkan sesuatu pada tempatnya, tindakan tidak manusiawi. Terhadap: diri sendiri, orang lain, Allah. Keburukan: tidak disenangi Allah, dibenci masyarakat, hidup tidak tenang, nama tercoreng, ancaman neraka.</div>
+                            </div>
+                            <div>
+                                <button class="accordion-toggle w-full text-left bg-red-50 hover:bg-red-100 p-3 rounded-md font-medium text-red-700 focus:outline-none">Diskriminasi</button>
+                                <div class="accordion-content p-3 border border-red-100 rounded-b-md">Memperlakukan orang lain pilih kasih, tidak adil (berdasar suku, ras, agama, dll.). Islam: manusia sama, beda hanya takwa. Dampak: hilang kasih sayang, rendahkan martabat, hilang keadilan, picu perseteruan, hambat kesejahteraan, ciptakan penindasan.</div>
+                            </div>
+                        </div>
+                        <p class="mt-4">Cara menghindari: perbanyak ibadah, berbagi, syukur, pahami keterbatasan, silaturahmi, tingkatkan iman & takwa, positif thinking, *tafahum, takaful, taaruf, taawun*.</p>
+                    </div>
+
+                    <div id="akhlak-zina" class="tab-content mt-4">
+                        <h3 class="text-xl font-semibold mb-3">Larangan Pergaulan Bebas dan Zina</h3>
+                        <h4 class="text-lg font-semibold mt-2 mb-1">Pengertian, Hukum, dan Jenis Zina:</h4>
+                        <p class="mb-2">Zina: hubungan seksual di luar pernikahan sah. Hukum: haram, dosa besar (QS. Al-Isra: 32).<br>
+                            - **Zina Muhsan:** Pelaku sudah menikah. Hukuman: rajam.<br>
+                            - **Zina Ghairu Muhsan:** Pelaku belum menikah. Hukuman: 100x dera, asingkan 1 tahun.<br>
+                            - **Zina Kecil (*zina al-lamam*):** Perbuatan mengarah ke zina besar (zina mata, hati, lisan, tangan, kaki).
+                        </p>
+                        <h4 class="text-lg font-semibold mt-2 mb-1">Bahaya dan Akibat Buruk Zina:</h4>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>Dosa Besar: Merusak akhlak, hilangkan *wara'*.</li>
+                            <li>Menghilangkan Cahaya Wajah: Kehilangan kehormatan, wajah suram.</li>
+                            <li>Pandangan Buruk Masyarakat: Dikucilkan.</li>
+                            <li>Sanksi Sosial dan Hukum.</li>
+                            <li>Hati yang Sempit: Enggan berbuat baik, tidak tenang.</li>
+                            <li>Ketidakpuasan Duniawi: Dibenci Allah, merasa tidak cukup.</li>
+                            <li>Nasab Tidak Jelas: Anak tidak dinasabkan ke bapak, tidak waris.</li>
+                            <li>Penyakit dan Kematian: Risiko PMS seperti HIV/AIDS.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fiqih" class="content-section">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">II. D. Aspek Fiqih: Zakat, Haji, Wakaf & Al-Kulliyatu al-Khamsah</h2>
+                <p class="mb-4">Bagian Fiqih ini akan mengupas hukum-hukum Islam terkait ibadah maliyah (harta) seperti zakat, haji, dan wakaf. Anda akan mempelajari pengertian, hukum, jenis, syarat, rukun, hingga penerima zakat. Selain itu, dibahas pula prinsip dasar haji dan wakaf, serta yang tidak kalah penting, relevansi *Al-Kulliyatu al-Khamsah* (lima prinsip dasar hukum Islam) dalam konteks fiqih muamalah modern.</p>
+                
+                <h3 class="text-xl font-semibold mb-2">Zakat</h3>
+                <p class="mb-1">Pengertian: Membersihkan harta & jiwa. Bahasa: tumbuh, berkembang. Istilah: pengambilan harta tertentu, sifat tertentu, untuk golongan tertentu. Hukum: Wajib (*fardu 'ain*) (QS. Al-Baqarah: 43, At-Taubah: 103).</p>
+                <p class="mb-1">Jenis Zakat:</p>
+                <ul class="list-disc list-inside ml-4 mb-2">
+                    <li><strong>Zakat Fitrah:</strong> Wajib di bulan Ramadhan sebelum Idul Fitri. Bentuk: makanan pokok 2,5 kg/3,5 liter per orang.</li>
+                    <li><strong>Zakat Mal:</strong> Atas harta capai nisab & haul (emas, perak, uang, ternak, pertanian, perdagangan, profesi).</li>
+                </ul>
+                <p class="mb-1">Syarat Wajib Zakat: Islam, merdeka, harta halal, milik penuh, nisab & haul, tidak hutang, harta berkembang.</p>
+                <p class="mb-1">Rukun Zakat: Niat, harta dizakati, pemberi, penerima.</p>
+                <p class="mb-3">Asnaf (Penerima Zakat - 8 Golongan): Fakir, Miskin, Amil, Muallaf, Riqab, Gharimin, Fisabilillah, Ibnu Sabil.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Prinsip-prinsip Haji dan Wakaf</h3>
+                <p class="mb-1"><strong>Haji:</strong> Rukun Islam ke-5, wajib bagi yang mampu. Hikmah: spiritual, sosial, ekonomi.</p>
+                <p class="mb-3"><strong>Wakaf:</strong> Menahan kepemilikan benda untuk disedekahkan manfaatnya berkelanjutan. Wakaf uang (*cash wakaf*) diizinkan, diatur PP No. 42/2006. Investasi syariah, keuntungan untuk program sosial-keagamaan. Memungkinkan siapa saja berwakaf.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Relevansi Al-Kulliyatu al-Khamsah (Lima Prinsip Dasar Hukum Islam)</h3>
+                <p class="mb-2">Juga dikenal *maqashid al-khamsah* / *al-dharuriyyat al-khamsah*. Tujuan: wujudkan maslahat, cegah mafsadat. Urutan prioritas (umum):</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-emerald-50 rounded-md"><strong>1. Menjaga Agama (*Hifzhu al-Din*):</strong> Memelihara ajaran Islam. Manfaat: pedoman hidup, dakwah terpelihara.</div>
+                    <div class="p-3 bg-emerald-50 rounded-md"><strong>2. Menjaga Jiwa (*Hifzhu al-Nafs*):</strong> Melindungi hak hidup & kesehatan. Manfaat: jiwa sehat, hargai sesama.</div>
+                    <div class="p-3 bg-emerald-50 rounded-md"><strong>3. Menjaga Akal (*Hifzhu al-‘Aql*):</strong> Memelihara akal untuk ilmu & kesadaran. Manfaat: akal sehat bermanfaat, berpikir positif.</div>
+                    <div class="p-3 bg-emerald-50 rounded-md"><strong>4. Menjaga Keturunan (*Hifzhu al-Nasl*):</strong> Kelangsungan keturunan via pernikahan sah & pendidikan. Manfaat: keluarga sakinah, keturunan shalih.</div>
+                    <div class="p-3 bg-emerald-50 rounded-md"><strong>5. Menjaga Harta (*Hifzhu al-Mal*):</strong> Memelihara harta dari kerusakan & perolehan halal. Manfaat: harta berkah, penuhi kebutuhan.</div>
+                </div>
+                <p class="mt-3">Relevan di era modern, khususnya *fiqih muamalah* (transaksi ekonomi). Pijakan etika bisnis syariah (adil, transparan, jujur). Mengatasi masalah sosial (ketidakadilan, kemiskinan). Gagasan "menjaga lisan" (*hifz al-lisan*) sebagai prinsip ke-6 di era digital.</p>
+            </div>
+        </section>
+
+        <section id="tarikh" class="content-section">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">II. E. Aspek Tarikh & Kebudayaan Islam</h2>
+                <p class="mb-4">Bagian Tarikh (Sejarah) dan Kebudayaan Islam ini akan membawa kita menelusuri dua periode penting: keteladanan Rasulullah SAW dalam membina umat di Madinah, serta peran ulama dalam penyebaran Islam di Indonesia. Anda akan mempelajari strategi dakwah Nabi, sifat-sifat mulia beliau, serta bagaimana para ulama menyebarkan Islam di Nusantara dengan kearifan lokal.</p>
+
+                <h3 class="text-xl font-semibold mb-2">Strategi Dakwah dan Kepemimpinan Rasulullah di Madinah</h3>
+                <p class="mb-2">Fokus: pembangunan masyarakat madani berbudaya tinggi berlandaskan Islam.</p>
+                <ul class="list-disc list-inside space-y-1 ml-4">
+                    <li>Membangun Masjid Nabawi sebagai pusat kegiatan (ibadah, pendidikan, musyawarah, politik).</li>
+                    <li>Menjadikan Madinah pusat pemerintahan dan peradaban Islam pertama.</li>
+                    <li>Membuat Piagam Madinah (konstitusi) mengatur hubungan antarumat beragama, ciptakan masyarakat setara & adil.</li>
+                    <li>Membangun persaudaraan Muhajirin & Anshar (berbasis iman, bukan darah).</li>
+                    <li>Resolusi konflik antarsuku (Aus & Khazraj) sebagai tokoh pemersatu.</li>
+                    <li>Membangun pasar dekat Masjid Nabawi untuk ekonomi rakyat berprinsip Islam & sarana dakwah.</li>
+                </ul>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Sifat-sifat Utama dan Perilaku Teladan Nabi Muhammad SAW</h3>
+                <p class="mb-2">Sifat Utama:</p>
+                <ul class="list-disc list-inside space-y-1 ml-4 mb-2">
+                    <li><strong>Siddiq (Jujur dan Benar):</strong> Dikenal Al-Amin & Al-Shiddiq. Selalu sampaikan kebenaran.</li>
+                    <li><strong>Amanah (Dapat Dipercaya dan Bertanggung Jawab):</strong> Bertanggung jawab, tepati janji, jaga kepercayaan.</li>
+                    <li><strong>Fatonah (Cerdas dan Bijaksana):</strong> Cerdas hadapi tantangan, berpikir jauh, keputusan bijaksana.</li>
+                    <li><strong>Tabligh (Menyampaikan Wahyu dan Ajaran):</strong> Sampaikan wahyu tanpa sembunyikan.</li>
+                </ul>
+                <p class="mb-2">Perilaku Teladan:</p>
+                <ul class="list-disc list-inside space-y-1 ml-4">
+                    <li>Pedagang yang Jujur: Terampil, jujur, profesional, hindari riba.</li>
+                    <li>Rendah Hati: Kepada siapapun, ikut kerja fisik (gali parit).</li>
+                    <li>Berakhlak Mulia: Tidak balas kejahatan, doakan penganiaya.</li>
+                    <li>Kecintaan kepada Orang Lain: Lemah lembut, pemaaf, perhatian ke anak-anak.</li>
+                    <li>Toleran: Sabar hadapi cobaan, terima perbedaan.</li>
+                    <li>Kedermawanan: Sangat dermawan, berjuang untuk Allah tanpa balasan.</li>
+                    <li>Mendahulukan Kepentingan Bersama & Musyawarah: Tidak paksakan kehendak, ajak dialog.</li>
+                </ul>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Peran Ulama dalam Penyebaran Islam di Indonesia (Abad ke-15)</h3>
+                <p class="mb-2">Peningkatan signifikan berkat ulama & wali songo. Terlibat dakwah, pendidikan, pemerintahan. Metode beragam & adaptif (perbaikan sosial, pendidikan, asimilasi budaya, politik). Penyebaran damai, kreatif.</p>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow mt-2">
+                        <thead class="bg-emerald-50">
+                            <tr>
+                                <th class="py-2 px-4 border-b text-left text-sm font-semibold text-emerald-700">Nama Tokoh</th>
+                                <th class="py-2 px-4 border-b text-left text-sm font-semibold text-emerald-700">Wilayah</th>
+                                <th class="py-2 px-4 border-b text-left text-sm font-semibold text-emerald-700">Metode Dakwah Kunci</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="py-2 px-4 border-b">Maulana Malik Ibrahim (Sunan Gresik)</td><td class="py-2 px-4 border-b">Gresik</td><td class="py-2 px-4 border-b">Perbaikan sosial (kesehatan, pertanian), humanis.</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Sunan Ampel</td><td class="py-2 px-4 border-b">Surabaya</td><td class="py-2 px-4 border-b">Pesantren Ampel Denta (pusat pendidikan).</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Sunan Giri (Raden Paku)</td><td class="py-2 px-4 border-b">Giri, Gresik</td><td class="py-2 px-4 border-b">Pesantren, lagu dolanan Islami, pendidikan & etika.</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Sunan Kalijaga</td><td class="py-2 px-4 border-b">Jawa</td><td class="py-2 px-4 border-b">Akulturasi budaya (wayang, gamelan, tembang).</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Maulana Hasanudin</td><td class="py-2 px-4 border-b">Banten</td><td class="py-2 px-4 border-b">Gabungkan kekuatan politik & dakwah.</td></tr>
+                            <tr><td class="py-2 px-4 border-b">Sultan Alauddin Riayat Syah</td><td class="py-2 px-4 border-b">Aceh</td><td class="py-2 px-4 border-b">Dukung pendidikan Islam, undang ulama Timur Tengah.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="tantangan" class="content-section">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-emerald-700">III. Tantangan & Implikasi Pedagogis dalam Pembelajaran PAI</h2>
+                 <p class="mb-4">Bagian terakhir ini membahas berbagai tantangan yang dihadapi dalam pembelajaran PAI agar dapat mencapai tujuan "pembelajaran mendalam". Mulai dari kesulitan yang umum dialami siswa, faktor-faktor internal dan eksternal yang mempengaruhinya, hingga rekomendasi konkret untuk praktik pembelajaran yang lebih efektif dan bermakna. Ini penting untuk refleksi dan perbaikan berkelanjutan dalam pendidikan agama.</p>
+
+                <h3 class="text-xl font-semibold mb-2">Kesulitan Umum Siswa dalam Belajar PAI</h3>
+                <p class="mb-3">Hasil belajar rendah, lambat selesaikan tugas, sikap kurang wajar (menentang, pura-pura, masa bodoh, dusta), tingkah laku menyimpang (membolos, terlambat, tidak kerjakan tugas, mengasingkan diri, kurang percaya diri). Penyebab: hambatan persepsi, konseptualisasi, bahasa, memori, pemusatan perhatian.</p>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Faktor-faktor yang Mempengaruhi Pembelajaran PAI</h3>
+                <p class="mb-1"><strong>Internal Siswa:</strong></p>
+                <ul class="list-disc list-inside ml-4 mb-2">
+                    <li>Minat belajar rendah.</li>
+                    <li>Perbedaan kemampuan dasar (intelegensi, bakat, minat).</li>
+                    <li>Faktor psikologis (motivasi, kesehatan mental, emosi).</li>
+                    <li>Latar belakang keluarga (kurang harmonis/peduli agama).</li>
+                </ul>
+                <p class="mb-1"><strong>Eksternal:</strong></p>
+                <ul class="list-disc list-inside ml-4 mb-2">
+                    <li>Minimnya alokasi waktu PAI (sering di jam terakhir, siswa jenuh).</li>
+                    <li>Kompetensi pendidik kurang (penguasaan kelas, materi, metode).</li>
+                    <li>Keterbatasan sarana & prasarana.</li>
+                </ul>
+
+                <h3 class="text-xl font-semibold mb-2 mt-4">Rekomendasi untuk Pembelajaran Mendalam yang Efektif</h3>
+                <ul class="list-disc list-inside space-y-1 ml-4">
+                    <li>Pengembangan bahan ajar kreatif & bervariasi, banyak referensi.</li>
+                    <li>Peningkatan kompetensi pendidik (pelatihan berkelanjutan: materi & metodologi inovatif seperti saintifik, PBL, mind mapping).</li>
+                    <li>Kerja sama erat pendidik, orang tua, masyarakat (lingkungan belajar kondusif).</li>
+                    <li>Optimalisasi alokasi waktu & pemanfaatan sarana prasarana.</li>
+                    <li>Integrasi perolehan pengetahuan dengan prosesnya (fleksibel, pemahaman menyeluruh & mendalam).</li>
+                </ul>
+                
+                <h3 class="text-xl font-bold mb-2 mt-6 text-emerald-700">IV. Kesimpulan dan Rekomendasi (dari Laporan)</h3>
+                <h4 class="text-lg font-semibold mb-2 mt-2">Ringkasan Temuan Utama (Laporan):</h4>
+                <p class="mb-3">Kurikulum PAI Kelas 10 Semester Akhir (Kurikulum Merdeka) komprehensif, bertujuan membentuk pemahaman mendalam dan karakter holistik. Mencakup Al-Qur'an (demokrasi), Aqidah (iman malaikat, Syu'ab al-Iman), Akhlak (terpuji & tercela, adab, larangan zina), Fiqih (zakat, haji, wakaf, Al-Kulliyatu al-Khamsah), Tarikh (Rasulullah di Madinah, ulama di Indonesia). Tantangan: minat siswa, waktu, kompetensi guru, sarana.</p>
+                
+                <h4 class="text-lg font-semibold mb-2 mt-2">Saran untuk Pengembangan Kurikulum dan Praktik Pembelajaran (Laporan):</h4>
+                 <ul class="list-disc list-inside space-y-1 ml-4">
+                    <li>Mendorong inovasi pedagogis (interaktif, partisipatif, aplikatif).</li>
+                    <li>Mengembangkan sumber belajar digital (variatif, relevan, mudah diakses).</li>
+                    <li>Pelatihan berkelanjutan pendidik (kompetensi materi kompleks & metodologi inovatif).</li>
+                    <li>Memperkuat kolaborasi komunitas (sekolah, keluarga, masyarakat).</li>
+                    <li>Penelitian dan evaluasi berkelanjutan (efektivitas implementasi Kurikulum Merdeka).</li>
+                </ul>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center p-6 mt-8 bg-stone-200 text-stone-600 text-sm">
+        <p>&copy; 2024 Aplikasi Interaktif Materi PAI Kelas 10. Dibuat berdasarkan analisis laporan.</p>
+    </footer>
+
+    <script>
+        const navButtons = document.querySelectorAll('.nav-button');
+        const contentSections = document.querySelectorAll('.content-section');
+        const accordionToggles = document.querySelectorAll('.accordion-toggle');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                navButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-emerald-500', 'text-white');
+                    btn.classList.add('hover:bg-emerald-200');
+                });
+                button.classList.add('active', 'bg-emerald-500', 'text-white');
+                button.classList.remove('hover:bg-emerald-200');
+
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(button.dataset.target).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        accordionToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    toggle.classList.remove('font-bold');
+                } else {
+                    // Close other accordions in the same parent if any
+                    // const parent = toggle.closest('.space-y-3') || toggle.closest('.mb-6');
+                    // if(parent) {
+                    //     parent.querySelectorAll('.accordion-content').forEach(ac => ac.style.maxHeight = null);
+                    //     parent.querySelectorAll('.accordion-toggle').forEach(at => at.classList.remove('font-bold'));
+                    // }
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    toggle.classList.add('font-bold');
+                }
+            });
+        });
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'border-b-2', 'border-emerald-500', 'text-emerald-600', 'font-semibold');
+                    btn.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                });
+                button.classList.add('active', 'border-b-2', 'border-emerald-500', 'text-emerald-600', 'font-semibold');
+                button.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+
+                tabContents.forEach(content => {
+                    if (content.id === targetTab) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+
+        // Chart for Syu'ab al-Iman
+        const syuabImanData = {
+            labels: ['Ma\'rifatun bil Qalbi (Hati)', 'Iqrarun bil Lisan (Lisan)', 'Amalun bil Arkan (Perbuatan)'],
+            datasets: [{
+                label: 'Jumlah Cabang Iman (Estimasi)',
+                data: [30, 7, 40],
+                backgroundColor: [
+                    'rgba(52, 211, 153, 0.6)', // emerald-400
+                    'rgba(16, 185, 129, 0.6)', // emerald-500
+                    'rgba(5, 150, 105, 0.6)'  // emerald-600
+                ],
+                borderColor: [
+                    'rgba(52, 211, 153, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(5, 150, 105, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const syuabImanExamples = {
+            'Ma\'rifatun bil Qalbi (Hati)': 'Contoh: Iman kepada Allah, malaikat, kitab, rasul, takdir, hari akhir; mencintai Allah dan Rasul, ikhlas, taubat, syukur, sabar, tawadhu, qana\'ah, tawakkal, malu.',
+            'Iqrarun bil Lisan (Lisan)': 'Contoh: Mengucapkan kalimat thayyibah, membaca Al-Qur\'an, belajar dan mengajarkan ilmu, berdoa, berzikir, menghindari perkataan sia-sia.',
+            'Amalun bil Arkan (Perbuatan)': 'Contoh: Bersuci, shalat, zakat/sedekah, puasa, haji, menutup aurat, mengurus jenazah, menikah, silaturahmi, amar ma\'ruf nahi munkar, jihad.'
+        };
+
+        const syuabImanChartCtx = document.getElementById('syuabImanChart');
+        if (syuabImanChartCtx) {
+            new Chart(syuabImanChartCtx, {
+                type: 'bar',
+                data: syuabImanData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Jumlah Cabang' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) { label += context.parsed.y; }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        const syuabImanDetailDiv = document.getElementById('syuabImanDetail');
+                        if (elements.length > 0) {
+                            const chartElement = elements[0];
+                            const label = syuabImanData.labels[chartElement.index];
+                            syuabImanDetailDiv.textContent = syuabImanExamples[label] || 'Detail tidak tersedia.';
+                        } else {
+                            syuabImanDetailDiv.textContent = 'Pilih batang pada diagram untuk melihat contoh cabang iman.';
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Activate first nav button and section on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (navButtons.length > 0) {
+                navButtons[0].click(); 
+            }
+             // Activate first tab in Akhlak section if it exists
+            const firstTabButton = document.querySelector('#akhlak .tab-button');
+            if (firstTabButton) {
+                firstTabButton.click();
+            }
+        });
+
+    </script>
+</body>
+</html>
